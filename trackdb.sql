@@ -32,5 +32,26 @@ create table Products(
   Reorder INT NOT NULL
 );
 
+create table wareHouses(
+ warehouse_id INT PRIMARY KEY AUTO_INCREMENT,
+ warehouse_name VARCHAR(120) NOT NULL,
+ location VARCHAR(100) NOT NULL,
+ qty_units INT
+);
 
+create table wareHouses_location(
+  location_id INT PRIMARY KEY AUTO_INCREMENT,
+  warehouse_id INT,
+  zone VARCHAR(30),
+  Aisle_bin VARCHAR(30),
+  FOREIGN KEY (warehouse_id) REFERENCES wareHouses(warehouse_id)
+);
+
+create table Inventory_Stock(
+   Stock_id INT PRIMARY KEY AUTO_INCREMENT,
+   product_id INT,
+   warehouse_id INT,
+   location_id INT,
+   
+);
 
