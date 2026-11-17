@@ -39,7 +39,7 @@ create table wareHouses(
  qty_units INT
 );
 
-create table wareHouses_location(
+create table wareHouseStorage_location(
   location_id INT PRIMARY KEY AUTO_INCREMENT,
   warehouse_id INT,
   zone VARCHAR(30),
@@ -52,6 +52,39 @@ create table Inventory_Stock(
    product_id INT,
    warehouse_id INT,
    location_id INT,
-   
+   quantity_available INT NOT NULL,
+   last_updated DATE,
+   FOREIGN KEY (product_id) REFERENCES Products(product_id),
+   FOREIGN KEY (warehouse_id) REFERENCES warehouses(warehouse_id),
+   FOREIGN KEY (location_id) REFERENCES wareHouseStorage(location_id)
+);
+
+create table purchase_orders(
+orders_id INT PRIMARY KEY AUTO_INCREMENT,
+supplier_id INT,
+warehouse_id INT,
+order_date DATE NOT NULL,
+expected_deliver_date DATE,
+status ENUM('pending','partially recieved','completed','cancelled'),
+FOREIGN KEY (supplier_id) REFERENCES Suppliers(supplier_id),
+FOREIGN KEY (warehouse_id) REFERENCES warHouses(warehouse_id)                                                                                                                           
+);
+
+create table dispatch(
+  track_id INT PRIMARY KEY AUTO_INCREMENT,
+  warehouse_id INT,
+  track_date INT,
+  track_name VARCHAR(60),
+  track_number VARCHAR(50) UNIQUE,
+  track_status ENUM('packed','in transit','out for delivery','delayed')
+);
+
+create table items_dispatch(
+item_id INT PRIMARY KEY AUTO_INCREMENT,
+track_id INT,
+product_id INT,
+item_qty INT NOT NULL,
+FOREIGN KEY(dispatch_id) REFERENCES dispatch(track_id),
+FOREIGN KEY(product_id) REFERENCES Products(product_id)
 );
 
